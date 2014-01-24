@@ -1,6 +1,6 @@
 'use strict';
 
-var redmine_client = require('../lib/redmine-client.js');
+var redmine = require('../lib/redmine-client.js');
 
 /*
    ======== A Handy Little Nodeunit Reference ========
@@ -22,15 +22,43 @@ var redmine_client = require('../lib/redmine-client.js');
       test.ifError(value)
 */
 
-exports['awesome'] = {
+exports['Redmine'] = {
    setUp: function(done) {
       // setup here
       done();
    },
-   'no args': function(test) {
-      test.expect(1);
-      // tests here
-      test.equal(redmine_client.awesome(), 'awesome', 'should be awesome.');
+   'constructor config': function(test) {
+      test.expect(5);
+      test.throws(
+         function() {
+            new redmine();
+         },
+         Error,
+         'Error thrown for missing host and apiKey in config'
+      );
+      test.throws(
+         function() {
+            new redmine({});
+         },
+         Error,
+         'Error thrown for missing host and apiKey in config'
+      );
+      test.throws(
+         function() {
+            new redmine({ apiKey: 'test' });
+         },
+         Error,
+         'Error thrown for missing host in config'
+      );
+      test.throws(
+         function() {
+            new redmine({ host: 'test' });
+         },
+         Error,
+         'Error thrown for missing apiKey in config'
+      );
+      var rm = new redmine({ host: 'test', apiKey: 'test' });
+      test.equal(true, rm !== null, 'redmine with proper config works');
       test.done();
    },
 };
