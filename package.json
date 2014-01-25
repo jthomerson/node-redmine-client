@@ -30,7 +30,8 @@
    },
    "dependencies": {
       "q": "1.0.x",
-      "request": "2.x"
+      "request": "2.x",
+      "tingodb": "0.2.x"
    },
    "devDependencies": {
       "grunt-contrib-jshint": "~0.6.4",
